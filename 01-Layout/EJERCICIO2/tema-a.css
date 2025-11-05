@@ -1,0 +1,55 @@
+:root {
+  --font-primary: "Poppins", sans-serif;
+  --font-secundary: "Roboto", sans-serif;
+
+  --bg-color: rgb(237, 238, 238);
+  --color-border: #141414;
+  --color-box-1: #845ec2;
+  --color-box-2: #b39cd0;
+  --color-box-3: #fbeaff;
+  --shadow: -15px 15px 15px 0px;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  background-color: var(--bg-color);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  margin-left: 20px;
+}
+
+.secundary-font {
+  font-family: var(--font-secundary);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  padding: 5% 5%;
+  width: 70px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.container .box:nth-child(1) {
+  background-color: var(--color-box-1);
+}
+
+.container .box:nth-child(2) {
+  background-color: var(--color-box-2);
+}
+
+.container .box:nth-child(3) {
+  background-color: var(--color-box-3);
+}
+.shadow {
+  box-shadow: var(--shadow);
+}
