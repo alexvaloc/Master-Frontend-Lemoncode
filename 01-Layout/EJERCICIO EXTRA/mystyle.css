@@ -1,11 +1,32 @@
+/*Hola! Podríais ponerme comentarios de cómo seria la manera más optima de hacer el css? he intentado usar variables y valores rem pero a parte de eso me cuesta ver globalmente lo que voy haciendo para que quede ordenado y no se repita código. Gracias!
+
+Tampoco he conseguido que en resolución pequeña, se mueva el fondo del nav junto con el menu-container en posicion stiky*/
+:root {
+  --bg-color-primary: #ece9f7;
+  --bg-color-secondary: #007f90;
+  --bg-color-nav: #5995b3;
+  --bg-color-nav-list: #75afb7;
+  --color-nav-list-hover: #54939c;
+  --bg-color-toolbar: rgb(253, 248, 248);
+
+  --border-color: rgb(51, 47, 47);
+  --border-radius: 8px;
+
+  --font-color-title: white;
+  --font-weight-bold: 600;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-* {
-  margin: 0;
+ul,
+ol {
+  list-style: none;
   padding: 0;
 }
 
@@ -24,10 +45,10 @@ body {
     "nav main"
     "footer footer";
   min-height: 100vh;
+  background-color: var(--bg-color-nav);
 }
 
 header {
-  background-color: turquoise;
   grid-area: header;
   display: flex;
   flex-direction: column;
@@ -37,16 +58,15 @@ header {
 .toolbar {
   display: flex;
   justify-content: space-between;
-  flex-basis: 40px;
   padding: 0.5rem 1rem;
-  background-color: white;
+  background-color: var(--bg-color-toolbar);
 }
 
 .page-title {
   display: flex;
   align-items: center;
-  background-color: #007f90;
-  color: white;
+  background-color: var(--bg-color-secondary);
+  color: var(--font-color-title);
   padding: 0.5rem 1rem;
   flex-flow: 1;
   height: 100%;
@@ -54,7 +74,6 @@ header {
 }
 
 nav {
-  background-color: #5995b3;
   grid-area: nav;
   position: sticky;
   align-self: start;
@@ -71,29 +90,33 @@ nav {
   justify-content: center;
   padding: 0.5rem;
   font-size: 1.3rem;
-  font-weight: 600;
-  color: rgb(251, 245, 245);
+  font-weight: var(--font-weight-bold);
+  color: var(--font-color-title);
 }
 
 .menu-container li {
   border: 1px solid rgb(145, 130, 130);
   padding: 10px;
-  background-color: #75afb7;
+  background-color: var(--bg-color-nav-list);
+}
+
+.menu-container li:hover {
+  background-color: var(--color-nav-list-hover);
 }
 
 main {
-  background-color: #ece9f7;
+  background-color: var(--bg-color-primary);
   grid-area: main;
 }
 
 .list {
-  border: 1px solid rgb(136, 16, 142);
   display: flex;
   justify-content: center;
   align-content: center;
   flex-wrap: wrap;
+  padding: 1rem;
   height: 100%;
-  gap: 20px;
+  gap: 1rem;
 }
 
 .item {
@@ -102,17 +125,56 @@ main {
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-width: 200px;
-  max-width: 200px;
-  border: 2px solid rgb(51, 47, 47);
+  flex: 1 1 200px;
+  min-width: 150px;
+  max-width: 250px;
+  border: 2px solid var(--border-color);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
+  transition: flex-basis 0.3s ease, max-width 0.3s ease;
 }
 
 footer {
   display: flex;
   align-items: center;
   padding-left: 10px;
-  background-color: #007f90;
+  background-color: var(--bg-color-secondary);
   grid-area: footer;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 75px auto 1fr 50px;
+    grid-template-areas:
+      "header header"
+      "nav nav"
+      "main main"
+      "footer footer";
+  }
+  .menu-title,
+  .toolbar {
+    display: none;
+  }
+
+  .menu-container ul {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem;
+  }
+
+  .menu-container li {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item {
+    width: 100%;
+    max-width: none;
+  }
 }
