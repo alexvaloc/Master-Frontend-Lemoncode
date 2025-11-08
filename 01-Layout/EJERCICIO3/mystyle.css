@@ -36,7 +36,7 @@ a {
 
 li:hover {
   background-color: var(--color-hover);
-  transition: background-color 0.3s;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .menu {
