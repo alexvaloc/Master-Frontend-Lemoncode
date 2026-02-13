@@ -21,9 +21,9 @@ dist/
 build/
 
 # --- Archivos de entorno ---
-.env
-.env.local
-*.env.*
+# .env
+# .env.local
+# *.env.*
 
 # --- Archivos de dependencias ---
 *.lock
