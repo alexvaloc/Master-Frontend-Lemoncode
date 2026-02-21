@@ -1,7 +1,7 @@
 console.log("************** DELIVERABLE 04 *********************");
 
 function isBookRead(books: Book[], titleToSearch: string): boolean {
-  const found: Book | undefined = books.find((element) => {
+  const found = books.find((element) => {
     return element.title === titleToSearch;
   });
 
