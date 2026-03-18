@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { routes } from "./router";
 
 export interface MemberEntity {
   id: string;
@@ -17,7 +18,8 @@ export const MemberRow: React.FC<Props> = ({ member, filter }) => {
     <div className="member-row">
       <img src={member.avatar_url} alt={member.login} />
       <span>{member.id}</span>
-      <Link to={`/detail/${member.login}/${filter}`}>{member.login}</Link>
+      <Link to={routes.detail(member.login, filter)}>{member.login}</Link>
     </div>
   );
 };
+//`/detail/${member.login}/${filter}`

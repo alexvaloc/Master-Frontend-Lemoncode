@@ -1,6 +1,6 @@
 import React from "react";
-import { Filter } from "./filter";
-import { List } from "./list";
+import { Filter } from "@/filter";
+import { List } from "@/list";
 import { useParams } from "react-router-dom";
 
 export const MemberPage: React.FC = () => {
