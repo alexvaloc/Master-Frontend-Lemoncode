@@ -1,13 +1,14 @@
 import React from "react";
-import { MemberRow } from "./memberRow";
-import { MemberEntity } from "./memberRow";
+import { GithubRow } from "./github.row";
+import { MemberEntity } from "./github.model";
 import { useDebounce } from "use-debounce";
+import { getMembers } from "./github.api";
 
 interface Props {
   filter?: string;
 }
 
-export const List: React.FC<Props> = ({ filter }) => {
+export const GithubList: React.FC<Props> = ({ filter }) => {
   const [members, setMembers] = React.useState<MemberEntity[]>([]);
   const [debouncedFilter] = useDebounce(filter, 500);
   //página actual:
@@ -15,23 +16,35 @@ export const List: React.FC<Props> = ({ filter }) => {
   //tamaño de página:
   const [perPage] = React.useState(5);
   const hasNextPage = members.length === perPage;
+  //useRef->Mantiene el valor sin hacer re-renders
+  // Record ->objeto tipo diccionario: clave string → valor array
+  const cacheRef = React.useRef<Record<string, MemberEntity[]>>({});
 
   React.useEffect(() => {
-    // if (!debouncedFilter || debouncedFilter.length < 3) return;
+    /*Caché simple para evitar llamadas innecesarioas a Github */
+    //Clave única de filtro:
+    const queryKey = `${debouncedFilter}-${page}-${perPage}`;
 
-    const url = `https://api.github.com/orgs/${debouncedFilter}/members?page=${page}&per_page=${perPage}`;
-    try {
-      fetch(url)
-        .then((response) => response.json()) //response es un objeto, lo parseamos a json
-        .then((json) => setMembers(json)); //guardamos resultado en estado
-    } catch (e) {
-      console.log("Error loading members");
+    //Mirar si ya existe en cache, si existe -> no llamamos API
+    if (cacheRef.current[queryKey]) {
+      console.log("Usando cache");
+      setMembers(cacheRef.current[queryKey]);
+      return;
     }
+
+    getMembers(debouncedFilter, page, perPage)
+      .then((json) => {
+        cacheRef.current[queryKey] = json;
+        setMembers(json);
+      })
+      .catch(() => console.log("Error loading members"));
   }, [debouncedFilter, page, perPage]);
 
   React.useEffect(() => {
     //Si el filtro cambia, volvemos a página 1
     setPage(1);
+    //Reseteamos cache
+    cacheRef.current = {};
   }, [debouncedFilter]);
 
   return (
@@ -43,7 +56,7 @@ export const List: React.FC<Props> = ({ filter }) => {
           <span>Name</span>
         </div>
         {members.map((member) => (
-          <MemberRow key={member.id} member={member} filter={debouncedFilter} />
+          <GithubRow key={member.id} member={member} filter={debouncedFilter} />
         ))}
         <div className="pagination">
           <button
@@ -52,16 +65,16 @@ export const List: React.FC<Props> = ({ filter }) => {
             onClick={() => setPage((prevPage) => prevPage - 1)}
             disabled={page === 1}
           >
-            Anterior
+            Previous
           </button>
-          <span className="pagination-info">Página {page}</span>
+          <span className="pagination-info">Page {page}</span>
           <button
             className="pagination-button"
             onClick={() => setPage((prevPage) => prevPage + 1)}
             // si no hay más resultados, se desactiva
             disabled={!hasNextPage}
           >
-            Siguiente
+            Next
           </button>
         </div>
       </div>

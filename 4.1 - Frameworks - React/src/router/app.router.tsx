@@ -6,16 +6,25 @@ import {
   Routes,
 } from "react-router-dom";
 import { switchRoutes } from "./routes";
-import { MemberPage } from "@/memberPage";
-import { Detail } from "@/detail";
+import { GithubPage } from "@/github/github.page";
+import { GithubDetail } from "@/github/github.detail";
+import { RickyMortyPage } from "@/rickyMorty/rickyMorty.page";
+import { Header } from "@/header";
+import { RickyMortyDetail } from "@/rickyMorty/rickyMortyDetail";
 
 export const AppRouter: React.FC = () => (
   <Router>
+    <Header />
     <Routes>
-      <Route path={switchRoutes.root} element={<MemberPage />} />
-      <Route path={switchRoutes.memberPage} element={<MemberPage />} />
-      <Route path={switchRoutes.detail} element={<Detail />} />
+      <Route path={switchRoutes.root} element={<GithubPage />} />
+      <Route path={switchRoutes.GithubPage} element={<GithubPage />} />
+      <Route path={switchRoutes.GithubDetail} element={<GithubDetail />} />
+      <Route path={switchRoutes.RickyMorty} element={<RickyMortyPage />} />
+      <Route
+        path={switchRoutes.RickyMortyDetail}
+        element={<RickyMortyDetail />}
+      />
       <Route path="*" element={<Navigate to={switchRoutes.root} />} />
     </Routes>
   </Router>
-); //min18
+);

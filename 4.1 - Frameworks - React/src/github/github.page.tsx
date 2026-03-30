@@ -1,9 +1,9 @@
 import React from "react";
 import { Filter } from "@/filter";
-import { List } from "@/list";
 import { useParams } from "react-router-dom";
+import { GithubList } from "./github.list";
 
-export const MemberPage: React.FC = () => {
+export const GithubPage: React.FC = () => {
   const { filter } = useParams(); //recogemos la información de la URL
 
   const [localFilter, setLocalFilter] = React.useState(filter ?? "lemoncode");
@@ -15,8 +15,8 @@ export const MemberPage: React.FC = () => {
   }, [filter]);
   return (
     <>
-      <Filter filter={localFilter} setFilter={setLocalFilter} />
-      <List filter={localFilter} />
+      <Filter filter={localFilter} setFilter={setLocalFilter} mode="manual" />
+      <GithubList filter={localFilter} />
     </>
   );
 };

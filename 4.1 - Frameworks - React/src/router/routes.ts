@@ -2,25 +2,34 @@ import { generatePath } from "react-router-dom";
 
 interface SwitchRoutes {
   root: string;
-  memberPage: string;
-  detail: string;
+  GithubPage: string;
+  GithubDetail: string;
+  RickyMorty: string;
+  RickyMortyDetail: string;
 }
 
 export const switchRoutes: SwitchRoutes = {
   root: "/",
-  memberPage: "/list/:filter",
-  detail: "/detail/:id/:filter",
+  GithubPage: "/list/:filter",
+  GithubDetail: "/detail/:id/:filter",
+  RickyMorty: "/rick-y-morty",
+  RickyMortyDetail: "/rick-y-morty/:id",
 };
 
 //para crear el path de detail, creamos una nueva interfaz heredando de la anterior, pero omitiendo la propiedad detail:
 interface Routes extends Omit<SwitchRoutes, "detail"> {
   detail: (id: string, filter: string) => string;
+  rickyMortyDetail: (id: number) => string;
 }
 
 export const routes: Routes = {
   ...switchRoutes,
+
   detail: (id: string, filter: string) =>
-    generatePath(switchRoutes.detail, { id, filter }),
+    generatePath(switchRoutes.GithubDetail, { id, filter }),
+
+  rickyMortyDetail: (id: number) =>
+    generatePath(switchRoutes.RickyMortyDetail, { id }),
 };
 
 //`/detail/${id}/${filter}` aunque se puede hacer asi, generatePath interpreta carácteres extraños sin riesgo en la URL

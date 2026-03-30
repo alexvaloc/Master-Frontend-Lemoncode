@@ -1,12 +1,14 @@
 import React from "react";
+import { Nav } from "./nav";
 
 export const Header: React.FC = () => {
   return (
     <header className="page-header">
-      <h1 className="project-title">Org Members Viewer</h1>
+      <h1 className="project-title">Api Explorer Hub</h1>
       <p className="project-subtitle">
-        Busca miembros de organizaciones en GitHub con filtrado y paginación
+        Search GitHub organization members with filtering and pagination
       </p>
+      <Nav />
     </header>
   );
 };
